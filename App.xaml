@@ -1,0 +1,22 @@
+﻿<Application x:Class="Noteeditor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:cv="clr-namespace:Noteeditor.Converters"
+             xmlns:local="clr-namespace:Noteeditor">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary/>
+                <ui:ControlsDictionary/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <cv:CutStringConverter x:Key="CutStringConverter"/>
+            <cv:BoolToColorBrushConverter x:Key="BoolToColorBrushConverter"/>
+            <cv:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
+            <cv:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter"/>
+
+            <SolidColorBrush x:Key="PrimaryTextColorBrush" Color="#fe8254"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

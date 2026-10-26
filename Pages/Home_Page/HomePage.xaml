@@ -1,0 +1,109 @@
+﻿<c:UiPage x:Class="Noteeditor.Pages.Home_Page.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:c="clr-namespace:Noteeditor.Abstractions"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Noteeditor.Pages.Home_Page"
+      mc:Ignorable="d" 
+      Background="{ui:ThemeResource}"
+      Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+      d:DataContext="{d:DesignInstance local:HomeViewModel}"
+      d:DesignHeight="720" d:DesignWidth="1080"
+      Title="HomePage">
+
+    <c:UiPage.Resources>
+        <Grid x:Key="Header" Margin="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ui:TextBlock FontTypography="Title" Text="Home" Margin="0,0,0,8"/>
+
+            <ui:TextBox Text="{Binding SearchEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Icon="{ui:SymbolIcon Symbol=Search16}" PlaceholderText="Enter note name..."/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                <ComboBox SelectedValue="{Binding SortingMode}" Width="200" ItemsSource="{Binding SortingMode, Converter={StaticResource EnumToCollectionConverter}}" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="8,0,0,0"/>
+                <ui:Button Command="{Binding CreateNoteCommand}" Content="Create new note" Icon="{ui:SymbolIcon Symbol=NoteAdd16}" VerticalAlignment="Stretch" Margin="8,0,0,0"/>
+            </StackPanel>
+        </Grid>        
+    </c:UiPage.Resources>
+
+    <Grid Margin="20,0,12,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>        
+
+        <ItemsControl Grid.Row="1" Margin="0,8,0,0" ItemsSource="{Binding Notes}" Grid.ColumnSpan="2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <ui:TextBlock Text="{Binding Key}" Visibility="{Binding Key, Converter={StaticResource NullableToVisibilityConverter}}" FontTypography="Subtitle" Foreground="{StaticResource PrimaryTextColorBrush}"/>
+
+                        <ui:ListView HorizontalAlignment="Stretch" ItemsSource="{Binding Notes}">
+                            <ui:ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="Transparent" Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=c:UiPage}}" MouseDown="OnItemMouseDown">
+                                        <Border.ContextMenu>
+                                            <ContextMenu>
+                                                <ui:MenuItem Command="{Binding PlacementTarget.Tag.RenameNoteCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding}" Header="Rename" Icon="{ui:SymbolIcon Symbol=Edit16}"/>
+                                            </ContextMenu>
+                                        </Border.ContextMenu>
+
+                                        <Grid Margin="4,0,4,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="{Binding Name}" FontTypography="BodyStrong"/>
+
+                                                <ui:TextBlock Appearance="Secondary" FontTypography="Caption" Margin="8,0,0,2" VerticalAlignment="Bottom">
+                                                    <Run Text="Created : "/>
+                                                    <Run Text="{Binding CreationTime}"/>
+                                                </ui:TextBlock>
+
+                                                <ui:TextBlock Appearance="Secondary" FontTypography="Caption" Margin="8,0,0,2" VerticalAlignment="Bottom">
+                                                    <Run Text="Last time edited : "/>
+                                                    <Run Text="{Binding LastEditTime}"/>
+                                                </ui:TextBlock>
+                                            </StackPanel>
+
+                                            <ui:TextBlock Grid.Row="1" Text="{Binding Content, Converter={StaticResource CutStringConverter}}"/>
+
+                                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="2">
+                                                <ToggleButton CommandParameter="{Binding}" Command="{Binding DataContext.PinNoteCommand, RelativeSource={RelativeSource AncestorType=c:UiPage}}" IsChecked="{Binding Pinned}">
+                                                    <ui:SymbolIcon Symbol="Star16" Filled="{Binding Pinned}" Foreground="{Binding Pinned, Converter={StaticResource BoolToColorBrushConverter}}"/>
+                                                </ToggleButton>
+                                                <ui:Button Appearance="Danger" Foreground="White" Icon="{ui:SymbolIcon Symbol=Delete16}" Command="{Binding DataContext.DeleteNoteCommand, RelativeSource={RelativeSource AncestorType=c:UiPage}}" CommandParameter="{Binding}" Margin="8,0,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ui:ListView.ItemTemplate>
+                        </ui:ListView>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</c:UiPage>

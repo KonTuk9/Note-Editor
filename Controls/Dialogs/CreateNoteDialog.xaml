@@ -1,0 +1,41 @@
+﻿<c:UiDialog x:Name="uiDialog" x:Class="Noteeditor.Controls.Dialogs.CreateNoteDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:c="clr-namespace:Noteeditor.Abstractions"
+             xmlns:local="clr-namespace:Noteeditor.Controls.Dialogs"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1080"
+            DataContext="{Binding ElementName=uiDialog}">
+    <Grid>
+        <Border Background="Black" Opacity="0.4"/>
+
+        <Border CornerRadius="4" VerticalAlignment="Stretch" Background="{ui:ThemeResource}" Width="480" Height="200">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="4" ShadowDepth="0" Direction="0" Opacity="0.4" Color="Black"/>
+            </Border.Effect>
+
+            <ui:Card VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <ui:TextBlock Text="New note" FontTypography="Subtitle"/>
+
+                    <ui:TextBox Text="{Binding NoteName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" PlaceholderText="Note name..." Grid.Row="1" VerticalAlignment="Center"/>
+                </Grid>
+
+                <ui:Card.Footer>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <ui:Button Margin="0,0,8,0" IsEnabled="{Binding CanSubmit}" Content="Submit" Appearance="Info" Width="100" IsDefault="True" Command="{Binding SubmitCommand, Mode=OneWay}"/>
+                        <ui:Button Content="Close" Width="100" IsCancel="True" Command="{Binding CloseCommand, Mode=OneWay}"/>
+                    </StackPanel>
+                </ui:Card.Footer>
+            </ui:Card>
+        </Border>
+    </Grid>
+</c:UiDialog>

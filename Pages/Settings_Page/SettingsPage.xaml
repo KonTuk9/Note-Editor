@@ -1,0 +1,92 @@
+﻿<c:UiPage x:Class="Noteeditor.Pages.Settings_Page.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:c="clr-namespace:Noteeditor.Abstractions"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+          xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Noteeditor.Pages.Settings_Page"
+    Background="{ui:ThemeResource}"
+    d:DataContext="{d:DesignInstance local:SettingsViewModel}"
+    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1080"
+      Title="SettingsPage">
+    <c:UiPage.Resources>
+        <ui:TextBlock Margin="12,8" x:Key="Header" Text="Settings" FontTypography="Title"/>
+    </c:UiPage.Resources>
+    
+    <Grid Margin="20,0,12,0">
+        <StackPanel>
+            <ui:TextBlock Text="Configure how app should work" Appearance="Secondary"/>
+
+            <ui:CardControl Margin="0,8,0,0" Icon="{ui:SymbolIcon Symbol=WeatherMoon16}">
+                <ui:CardControl.Header>
+                    <StackPanel>
+                        <ui:TextBlock Text="Dark theme mode"/>
+                        <ui:TextBlock Text="Enables dark theme for application" Appearance="Secondary"/>
+                    </StackPanel>
+                </ui:CardControl.Header>
+
+                <ui:ToggleSwitch Command="{Binding SetThemeCommand}" IsChecked="{Binding DarkThemeEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </ui:CardControl>
+
+            <ui:CardControl Margin="0,8,0,0" Icon="{ui:SymbolIcon Symbol=ImageMultiple16}">
+                <ui:CardControl.Header>
+                    <StackPanel>
+                        <ui:TextBlock Text="Icon"/>
+                        <ui:TextBlock Text="Set current application icon" Appearance="Secondary"/>
+                    </StackPanel>
+                </ui:CardControl.Header>
+
+                <ComboBox SelectionChanged="ComboBox_SelectionChanged" SelectedValue="{Binding CurrentIcon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="180" ItemsSource="{Binding Icons}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ui:ImageIcon Source="{Binding}" Height="20"/>
+                                <ui:TextBlock Text="{Binding Converter={StaticResource CutStringConverter}}" Margin="8,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+            </ui:CardControl>
+
+            <ui:CardExpander Icon="{ui:SymbolIcon Symbol=DesignIdeas16}" IsExpanded="True" Margin="0,8,0,0">
+                <ui:CardExpander.Header>
+                    <StackPanel>
+                        <ui:TextBlock Text="Customisation"/>
+                        <ui:TextBlock Text="Configure customisable application options" Appearance="Secondary"/>
+                    </StackPanel>
+                </ui:CardExpander.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="1">
+                        <ui:TextBlock Text="Custom application icon. Must be multi-size .ico file 16-128px" Appearance="Secondary"/>
+                        <ui:TextBox Text="{Binding IconPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="36" PlaceholderText="C:/Example/Custom.ico"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal">                        
+                        <ui:Button Command="{Binding AddIconCommand}" IsEnabled="{Binding CanAddPath}" Height="36" Content="Add to icon list" Icon="{ui:SymbolIcon Symbol=Add16}" Margin="8,0,0,0"/>
+                        <ui:Button Command="{Binding BrowseIconCommand}" Width="100" Height="36" Content="Browse" Icon="{ui:SymbolIcon Symbol=Folder16}" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>                
+            </ui:CardExpander>
+        </StackPanel>
+    </Grid>
+</c:UiPage>

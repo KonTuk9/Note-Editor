@@ -1,0 +1,35 @@
+﻿<c:UiWindow x:Class="Noteeditor.Windows.Confirm_Changes_Window.ConfirmChangesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:c="clr-namespace:Noteeditor.Abstractions"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Noteeditor.Windows.Confirm_Changes_Window"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:ConfirmChangesViewModel}"
+        Background="{ui:ThemeResource}"
+        Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+        ResizeMode="NoResize"
+        MinHeight="0"
+        MinWidth="0"
+            WindowStartupLocation="CenterScreen"
+        Title="ConfirmChangesWindow" Height="240" Width="360">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar x:Name="titleBar" Title="Note edior" Icon="{Binding CurrentIcon}" ShowMaximize="False" ShowMinimize="False"/>
+
+        <ui:TextBlock Grid.Row="1" Margin="12" Text="There's unsaved note changes. Save it?"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="12" HorizontalAlignment="Right">
+            <ui:Button Command="{Binding ConfirmCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=c:UiWindow}}" Content="Save changes" Appearance="Info"/>
+            <ui:Button Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=c:UiWindow}}" Content="Cancel" Appearance="Secondary" Margin="8,0,0,0"/>
+            <ui:Button Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=c:UiWindow}}" Content="Don't save" Appearance="Secondary" Margin="8,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</c:UiWindow>

@@ -1,0 +1,85 @@
+﻿<c:UiPage x:Class="Noteeditor.Pages.About_Page.AboutPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:c="clr-namespace:Noteeditor.Abstractions"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Noteeditor.Pages.About_Page"
+      mc:Ignorable="d" 
+    Background="{ui:ThemeResource}"
+    d:DataContext="{d:DesignInstance local:AboutViewModel}"
+    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+      d:DesignHeight="720" d:DesignWidth="1080"
+      Title="AboutPage">
+
+    <c:UiPage.Resources>
+        <ui:TextBlock x:Key="Header" Margin="12,8" Text="About" FontTypography="Title"/>
+    </c:UiPage.Resources>
+
+    <Grid Margin="20,0,12,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            
+        </Grid.RowDefinitions>
+
+        <Grid HorizontalAlignment="Center" Margin="0,20,98,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <ui:SymbolIcon Symbol="WindowEdit16" FontSize="98" Grid.RowSpan="2" Margin="0,0,12,0" VerticalAlignment="Bottom"/>
+
+            <ui:TextBlock Text="Note editor" FontTypography="TitleLarge" Grid.Column="1"/>
+
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <ui:TextBlock Text="Text file editing application"/>
+                <ui:TextBlock Appearance="Secondary" FontTypography="Caption">
+                    <Run Text="Version : "/>
+                    <Run Text="{Binding Version, Mode=OneTime}"/>
+                </ui:TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1">
+            <ui:TextBlock Text="Author" Foreground="{StaticResource PrimaryTextColorBrush}" FontTypography="Subtitle"/>
+
+            <ui:CardAction CommandParameter="https://github.com/KonTuk9" Icon="{ui:SymbolIcon Symbol=Person16}" Margin="0,8,0,0" Command="{Binding OpenLinkCommand}">
+                <StackPanel>
+                    <ui:TextBlock Text="Github : "/>
+                    <ui:TextBlock Text="@KonTuk9" Appearance="Secondary"/>
+                </StackPanel>
+            </ui:CardAction>
+
+            <ui:CardAction CommandParameter="https://github.com/KonTuk9" Content="Project source" Icon="{ui:SymbolIcon Symbol=Code16}" Margin="0,8,0,0" Command="{Binding OpenLinkCommand}"/>
+
+            <ui:TextBlock Text="Extensions" Foreground="{StaticResource PrimaryTextColorBrush}" FontTypography="Subtitle" Margin="0,12,0,0"/>
+
+            <Grid Margin="0,8,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Margin="0,0,4,0">
+                    <ui:CardAction Content="WPF UI by lepo.co" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/lepoco/wpfui" Icon="{ui:SymbolIcon Symbol=Diversity20}"/>
+                    <ui:CardAction Content="Microsoft dependency injection" Command="{Binding OpenLinkCommand}" CommandParameter="https://www.nuget.org/packages/microsoft.extensions.dependencyinjection" Icon="{ui:SymbolIcon Symbol=TableSimpleCheckmark16}" Margin="0,8,0,0"/>
+                    <ui:CardAction Content="MVVM Community toolkit" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/CommunityToolkit/MVVM-Samples" Icon="{ui:SymbolIcon Symbol=Toolbox16}" Margin="0,8,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                    <ui:CardAction Content="Dynamic Data" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/reactivemarbles/DynamicData" Icon="{ui:SymbolIcon Symbol=DatabaseStack16}"/>
+                    <ui:CardAction Content="Newtonsoft JSON" Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/JamesNK/Newtonsoft.Json" Icon="{ui:SymbolIcon Symbol=DocumentTableCube20}" Margin="0,8,0,0"/>
+                    <ui:CardAction Content="Microsoft Entity Framework SQLite" Command="{Binding OpenLinkCommand}" CommandParameter="https://www.nuget.org/packages/microsoft.entityframeworkcore.sqlite" Icon="{ui:SymbolIcon Symbol=DatabaseMultiple20}" Margin="0,8,0,0"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</c:UiPage>
