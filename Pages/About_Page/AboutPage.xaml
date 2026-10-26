@@ -58,7 +58,7 @@
                 </StackPanel>
             </ui:CardAction>
 
-            <ui:CardAction CommandParameter="https://github.com/KonTuk9" Content="Project source" Icon="{ui:SymbolIcon Symbol=Code16}" Margin="0,8,0,0" Command="{Binding OpenLinkCommand}"/>
+            <ui:CardAction CommandParameter="https://github.com/KonTuk9/Note-Editor" Content="Project source" Icon="{ui:SymbolIcon Symbol=Code16}" Margin="0,8,0,0" Command="{Binding OpenLinkCommand}"/>
 
             <ui:TextBlock Text="Extensions" Foreground="{StaticResource PrimaryTextColorBrush}" FontTypography="Subtitle" Margin="0,12,0,0"/>
 
